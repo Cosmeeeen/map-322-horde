@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class User extends Entity<String>{
     private String firstName;
     private String lastName;
@@ -37,4 +39,19 @@ public class User extends Entity<String>{
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getFirstName(),
+                user.getFirstName()) && Objects.equals(getLastName(),
+                user.getLastName());
+    }
+
+    public int hashCode() {
+        return Objects.hash(getUsername(), getFirstName(),getLastName());
+    }
 }
