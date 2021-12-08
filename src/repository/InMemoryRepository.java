@@ -2,7 +2,6 @@ package repository;
 
 import domain.Entity;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
     public E save(E entity) {
         if(entity==null)
             throw new IllegalArgumentException("The entity cannot be null");
-        entities.put(entity.getUsername(), entity);
+        entities.put(entity.getID(), entity);
         return entity;
     }
 
@@ -44,10 +43,10 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
         if (entity == null)
             throw new IllegalArgumentException("entity must be not null!");
 
-        entities.put(entity.getUsername(), entity);
+        entities.put(entity.getID(), entity);
 
-        if (entities.get(entity.getUsername()) != null) {
-            entities.put(entity.getUsername(), entity);
+        if (entities.get(entity.getID()) != null) {
+            entities.put(entity.getID(), entity);
             return null;
         }
         return entity;
