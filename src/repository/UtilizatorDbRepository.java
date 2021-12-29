@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class UtilizatorDbRepository implements Repository<String, User> {
+public class UtilizatorDbRepository implements Repository<Long, User> {
     private String url;
     private String username;
     private String password;
@@ -18,10 +18,18 @@ public class UtilizatorDbRepository implements Repository<String, User> {
         this.password = password;
     }
     @Override
-    public User findOne(String id) {
+    public User findOne(Long id) {
         for (User f : (Iterable<User>) findAll()) {
-            if (Objects.equals(f.getUsername(), id))
+            if (Objects.equals(f.getID(), id))
                 return f;
+        }
+        return null;
+    }
+
+    public User findAfterUsername(String username) {
+        for (User u : (Iterable<User>) findAll()) {
+            if (Objects.equals(u.getUsername(), username))
+                return u;
         }
         return null;
     }
@@ -34,12 +42,13 @@ public class UtilizatorDbRepository implements Repository<String, User> {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
                 String username = resultSet.getString("username");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
 
                 User utilizator = new User(username, firstName, lastName);
-                utilizator.setUsername(username);
+                utilizator.setID(id);
                 users.add(utilizator);
             }
             return users;
@@ -69,13 +78,13 @@ public class UtilizatorDbRepository implements Repository<String, User> {
     }
 
     @Override
-    public User delete(String aLong) {
-        String sql = "delete from users where username = ?";
+    public User delete(Long aLong) {
+        String sql = "delete from users where id = ?";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, aLong);
+            ps.setLong(1, aLong);
             ps.executeUpdate();
 
         } catch (SQLException e) {
