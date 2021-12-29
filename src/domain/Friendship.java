@@ -4,15 +4,13 @@ import java.sql.Date;
 import java.util.AbstractMap;
 import java.util.Objects;
 
-public class Friendship {
+public class Friendship extends Entity<Long>{
     private AbstractMap.SimpleEntry<String, String> friendship;
-    private java.sql.Date friendshipDate;
-    private String friendshipStatus;
+    private Date friendshipDate;
 
-    public Friendship(String id1, String id2, java.sql.Date friendshipDate, String friendshipStatus) {
+    public Friendship(String id1, String id2, Date friendshipDate) {
         friendship = new AbstractMap.SimpleEntry<String, String>(id1,id2);
         this.friendshipDate = friendshipDate;
-        this.friendshipStatus = friendshipStatus;
     }
 
     public AbstractMap.SimpleEntry<String, String> getFriendship() {
@@ -27,15 +25,7 @@ public class Friendship {
         return friendship.getValue();
     }
 
-    public java.sql.Date getFriendshipDate(){ return friendshipDate; }
-
-    public String getFriendshipStatus(){
-        return friendshipStatus;
-    }
-
-    public void setFriendshipStatus(String friendshipStatus) {
-        this.friendshipStatus = friendshipStatus;
-    }
+    public Date getFriendshipDate(){ return friendshipDate; }
 
     public void setFriendshipDate(Date friendshipDate) {
         this.friendshipDate = friendshipDate;
@@ -43,7 +33,7 @@ public class Friendship {
 
     @Override
     public String toString() {
-        return "Username friend 1: " + friendship.getKey() + " Username friend 2: " + friendship.getValue() + " on: " + friendshipDate + " status: " + friendshipStatus;
+        return "Username friend 1: " + friendship.getKey() + " Username friend 2: " + friendship.getValue() + " on: " + friendshipDate ;
     }
 
     @Override

@@ -2,15 +2,19 @@ package domain;
 
 import java.util.Objects;
 
-public class User extends Entity<String>{
+public class User extends Entity<Long>{
+    private String username;
     private String firstName;
     private String lastName;
 
     public User(String username, String firstName, String lastName) {
-        setUsername(username);
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
     }
+    public String getUsername(){ return username; }
+
+    public void setUsername(String username){ this.username = username; }
 
     public String getFirstName() {
         return firstName;
@@ -32,8 +36,8 @@ public class User extends Entity<String>{
     @Override
     public String toString() {
 
-        return "Utilizator{" +
-                "username=" + getUsername() +
+        return "Utilizator{" +" id=" + getID() +
+                " username=" + username +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' + " }";
 
